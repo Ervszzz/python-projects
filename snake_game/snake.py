@@ -9,11 +9,11 @@ RIGHT =0
 class Snake():
     def __init__(self):
         self.segments = []
-        self.create_snake()
+        self.create_initial_snake()
         self.head = self.segments[0]
         self.head.color("red")
 
-    def create_snake(self):
+    def create_initial_snake(self):
         for coordinate in STARTING_POSITIONS:
             new_segment = Turtle("square")
             new_segment.color("white")
@@ -29,6 +29,9 @@ class Snake():
             self.segments[seg_num].goto(new_x, new_y)
         
         self.head.forward(MOVE_DISTANCE)
+
+    def get_position(self):
+        return self.head.pos()
 
     def up(self):
         if self.head.heading() != DOWN:
