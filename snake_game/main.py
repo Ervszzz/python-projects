@@ -32,6 +32,7 @@ def main():
 
     game_is_on = True
     food = Food()
+    screen_boundary = 300 - 10
     while game_is_on:
         screen.update()
         time.sleep(0.08)
@@ -41,13 +42,14 @@ def main():
         snake_y_pos = abs(snake.get_position()[1]) # Get the absolute value of y coordinate
 
         # Main game loop adjustments
-        if snake_x_pos == 300 or snake_y_pos == 300:
+        if abs(snake_x_pos) >= screen_boundary or abs(snake_y_pos) >= screen_boundary:
             game_over()
             break
+        # Checks if the snake has eaten the food
         elif is_close(snake.get_position(), food.get_position(), distance=20):  # Assuming a tolerance of 20
             snake.add_segment()
             food.remove_food()
-            food.create_food()  # This should also handle making the food visible if it was previously hidden
+            food.create_food() # Create new food
             print(food.get_position())
 
 
