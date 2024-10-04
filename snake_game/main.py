@@ -29,9 +29,6 @@ def main():
 
     game_is_on = True
     food = Food()
-    food_x_pos = abs(food.get_position()[0])
-    food_y_pos = abs(food.get_position()[1])
-    print(f'Food pos is {food_x_pos}')
     while game_is_on:
         screen.update()
         time.sleep(0.08)
