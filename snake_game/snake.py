@@ -32,7 +32,7 @@ class Snake():
 
     def add_segment(self):
         new_segment = Turtle("square") # Create the new segment
-        new_segment.color("green") # Set the Color
+        new_segment.color("white") # Set the Color
         new_segment.penup()
         tail = self.segments[len(self.segments) -1] # Get the tail of the snake
         new_x = tail.xcor() # Get the x coordinate of the tail

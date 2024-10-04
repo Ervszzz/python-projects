@@ -11,7 +11,7 @@ def game_over():
     text_writer.color("white")    
     text_writer.write("GAME OVER!!!!", align="center", font=("Arial", 16, "normal"))
 
-def is_close(pos1, pos2, distance=20):
+def is_close(pos1, pos2, distance=2):
     return abs(pos1[0] - pos2[0]) < distance and abs(pos1[1] - pos2[1]) < distance
 
 def main():
@@ -50,13 +50,7 @@ def main():
             snake.add_segment()
             food.remove_food()
             food.create_food() # Create new food
-            print(food.get_position())
 
-
-
-
-    # Keep the window open until it is closed by the user
-    screen.exitonclick()
 
 if __name__ == "__main__":
     main()
