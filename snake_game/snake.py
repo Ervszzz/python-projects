@@ -30,6 +30,16 @@ class Snake():
         
         self.head.forward(MOVE_DISTANCE)
 
+    def add_segment(self):
+        new_segment = Turtle("square") # Create the new segment
+        new_segment.color("green") # Set the Color
+        new_segment.penup()
+        tail = self.segments[len(self.segments) -1] # Get the tail of the snake
+        new_x = tail.xcor() # Get the x coordinate of the tail
+        new_y = tail.ycor() # Get the y coordinate of the tail
+        new_segment.goto(new_x, new_y) # Add the new segment behind the tail
+        self.segments.append(new_segment) # The new segment becomes the tail
+
     def get_position(self):
         return self.head.pos()
 

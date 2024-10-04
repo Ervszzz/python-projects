@@ -11,6 +11,9 @@ def game_over():
     text_writer.color("white")    
     text_writer.write("GAME OVER!!!!", align="center", font=("Arial", 16, "normal"))
 
+def is_close(pos1, pos2, distance=20):
+    return abs(pos1[0] - pos2[0]) < distance and abs(pos1[1] - pos2[1]) < distance
+
 def main():
     screen = Screen() # Create the Screen
     screen.setup(width=600, height=600) # Define the dimensions of the screen
@@ -37,13 +40,15 @@ def main():
         snake_x_pos = abs(snake.get_position()[0]) # Get the absolute value of x coordinate
         snake_y_pos = abs(snake.get_position()[1]) # Get the absolute value of y coordinate
 
-        if snake_x_pos ==  300 or snake_y_pos == 300:
+        # Main game loop adjustments
+        if snake_x_pos == 300 or snake_y_pos == 300:
             game_over()
             break
-        elif snake.get_position() == food.get_position():
-            game_over()
-            break
-            
+        elif is_close(snake.get_position(), food.get_position(), distance=20):  # Assuming a tolerance of 20
+            snake.add_segment()
+            food.remove_food()
+            food.create_food()  # This should also handle making the food visible if it was previously hidden
+            print(food.get_position())
 
 
 

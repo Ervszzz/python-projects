@@ -23,6 +23,9 @@ class Food():
         # Spawn location in the screen
         new_food.goto(random_x, random_y)
 
+    def remove_food(self):
+        self.food.hideturtle()
+
     def get_position(self):
         return self.food.pos()
 
