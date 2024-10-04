@@ -1,4 +1,5 @@
 import random
+import os
 
 def ask_for_input():
     while True:
@@ -18,7 +19,11 @@ def main():
     print('You have 5 lives to guess the word.')
     print('=' * 35)
     lives = 5
-    word_list = ['Hello']
+    word_list = []
+
+    with open(os.path.join(os.path.dirname(__file__), 'random_words.txt'), 'r') as file:
+        word_list = file.read().split()
+        
     random_word = random.choice(word_list).lower()
     blanks = ['_' for _ in random_word]
     print(f'The word is: {''.join(blanks)}')
@@ -29,19 +34,26 @@ def main():
             lives -= 1
             print(f'You have {lives} lives left.')
         else:
-            print('Correct!')
-            for index, char in enumerate(random_word):
-                if char == user_input:
-                    blanks[index] = char
+            if user_input in blanks:
+                print('You already guessed that letter.')
+            else:
+                print('Correct!')
+                for index, char in enumerate(random_word):
+                    if char == user_input:
+                        blanks[index] = char
+
         print_correct_guesses(blanks)
 
         if '_' not in blanks:
             print('*' * 35)
-            print('You won the game!')
+            print('YOU WON THE GAME!')
             print('*' * 35)
-            break
+            exit()
     else:
-        print(f'You lost! The word was: {random_word}')
+        print('=' * 35)
+        print(f'YOU LOST THE GAME! The word was: {random_word}')
+        print('=' * 35)
+        exit()
 
 if __name__ == '__main__':
     main()
