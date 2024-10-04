@@ -33,8 +33,9 @@ def main():
         screen.update()
         time.sleep(0.08)
         snake.move()
-        snake_x_pos = abs(snake.get_position()[0])
-        snake_y_pos = abs(snake.get_position()[1])
+
+        snake_x_pos = abs(snake.get_position()[0]) # Get the absolute value of x coordinate
+        snake_y_pos = abs(snake.get_position()[1]) # Get the absolute value of y coordinate
 
         if snake_x_pos ==  300 or snake_y_pos == 300:
             game_over()
