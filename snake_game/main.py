@@ -29,17 +29,23 @@ def main():
 
     game_is_on = True
     food = Food()
-    print(f'Food pos is {food.get_position()}')
+    food_x_pos = abs(food.get_position()[0])
+    food_y_pos = abs(food.get_position()[1])
+    print(f'Food pos is {food_x_pos}')
     while game_is_on:
         screen.update()
-        time.sleep(0.07)
+        time.sleep(0.08)
         snake.move()
-        snake_x_pos = snake.get_position()[0]
-        snake_y_pos = snake.get_position()[1]
+        snake_x_pos = abs(snake.get_position()[0])
+        snake_y_pos = abs(snake.get_position()[1])
 
-        if abs(snake_x_pos) ==  300 or abs(snake_y_pos) == 300:
+        if snake_x_pos ==  300 or snake_y_pos == 300:
             game_over()
             break
+        elif snake.get_position() == food.get_position():
+            game_over()
+            break
+            
 
 
 

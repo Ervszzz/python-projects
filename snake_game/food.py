@@ -14,8 +14,11 @@ class Food():
         new_food.penup()
         new_food.shapesize(stretch_len=0.5, stretch_wid=0.5)
         self.food = new_food
-        random_x = random.randint(-SCREEN_DIMENSION[0]//2, SCREEN_DIMENSION[0]//2)
-        random_y = random.randint(-SCREEN_DIMENSION[1]//2, SCREEN_DIMENSION[1]//2)
+        grid_size = 20
+        x_max = SCREEN_DIMENSION[0]//2 // grid_size
+        y_max = SCREEN_DIMENSION[1]//2 // grid_size
+        random_x = random.randint(-x_max, x_max) * grid_size
+        random_y = random.randint(-y_max, y_max) * grid_size
 
         # Spawn location in the screen
         new_food.goto(random_x, random_y)
