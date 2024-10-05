@@ -6,6 +6,20 @@ from scoreboard import Scoreboard
 
 screen = Screen() # Create the Screen
 
+def clear_everything():
+    # Hide and clear all existing turtles to remove them from the screen
+    for turtle in screen.turtles():
+        turtle.hideturtle()
+        turtle.clear()
+
+    # Reset the screen
+    screen.clearscreen()
+    screen.bgcolor("black")
+    screen.title("Snake Game")
+
+def play_again():
+    clear_everything()
+    main()
 def game_over():
     text_writer = Turtle()
     text_writer.hideturtle()  # We don't want to see the turtle, just the text
@@ -45,10 +59,12 @@ def main():
         snake_y_pos = abs(snake.get_position()[1]) # Get the absolute value of y coordinate
 
         # Main game loop adjustments
-        if abs(snake_x_pos) >= screen_boundary or abs(snake_y_pos) >= screen_boundary:
+        if snake_x_pos >= screen_boundary or snake_y_pos >= screen_boundary:
+            game_is_on = False
+            clear_everything()
             game_over()
-            break
-        # Checks if the snake has eaten the food
+            screen.onkey(play_again, "y")
+            screen.onkey(exit, 'n')
         elif is_close(snake.get_position(), food.get_position(), distance=20):  # Assuming a tolerance of 20
             scoreboard.score = len(snake.segments) - 3
             scoreboard.increment_score()
@@ -62,7 +78,11 @@ def main():
             if segment == snake.head:
                 pass
             elif snake.head.distance(segment) < 10:
+                game_is_on = False
+                clear_everything()
                 game_over()
+                screen.onkey(play_again, "y")
+                screen.onkey(exit, 'n')
     
     screen.exitonclick()
 
