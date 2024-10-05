@@ -14,8 +14,6 @@ def game_over():
     text_writer.color("white")    
     text_writer.write("GAME OVER!!!! Play again? Y/N", align="center", font=("Arial", 16, "normal"))
 
-    screen.onkey(playagain, "y")
-    screen.listen()
 
 def is_close(pos1, pos2, distance=2):
     return abs(pos1[0] - pos2[0]) < distance and abs(pos1[1] - pos2[1]) < distance
@@ -58,8 +56,15 @@ def main():
             snake.add_segment()
             food.remove_food()
             food.create_food() # Create new food
+
+        # Check if snake eats its own tails
+        for segment in snake.segments:
+            if segment == snake.head:
+                pass
+            elif snake.head.distance(segment) < 10:
+                game_over()
     
-    # screen.exitonclick()
+    screen.exitonclick()
 
 
 if __name__ == "__main__":
