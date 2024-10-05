@@ -3,53 +3,37 @@ import time
 from snake import Snake
 from food import Food
 from scoreboard import Scoreboard
-
+from utils import *
 screen = Screen() # Create the Screen
 
-def clear_everything():
-    # Hide and clear all existing turtles to remove them from the screen
-    for turtle in screen.turtles():
-        turtle.hideturtle()
-        turtle.clear()
-
-    # Reset the screen
-    screen.clearscreen()
-    screen.bgcolor("black")
-    screen.title("Snake Game")
 
 def play_again():
-    clear_everything()
-    main()
-def game_over():
-    text_writer = Turtle()
-    text_writer.hideturtle()  # We don't want to see the turtle, just the text
-    text_writer.penup() 
-    text_writer.goto(0, 0) # Move the turtle to the center of the screen
-    text_writer.color("white")    
-    text_writer.write("GAME OVER!!!! Play again? Y/N", align="center", font=("Arial", 16, "normal"))
+    # It's crucial to stop listening to key events during reset to avoid issues.
+    screen.onkey(None, "y")  # Disable the handler to prevent multiple restarts
+    screen.clearscreen()  # Clears the current Turtle graphics and state
+    main()  # Restart the game
+    screen.listen()  # Start listening for key events again
+    screen.onkey(play_again, "y")  # Rebind the play_again function to "y"
 
 
-def is_close(pos1, pos2, distance=2):
-    return abs(pos1[0] - pos2[0]) < distance and abs(pos1[1] - pos2[1]) < distance
 
 def main():
-    screen.setup(width=600, height=600) # Define the dimensions of the screen
-    screen.bgcolor("black") # Set the background color
-    screen.title("Snake Game") # Set the title
-    screen.tracer(0)
-
+    setup_screen(screen)
     snake = Snake() # Create the Snake
     food = Food()   # Create the food
     scoreboard = Scoreboard() # Create the scoreboard
 
     screen.listen() # Set the screen to listen for inputs
-    screen.onkey(snake.up, "Up")
+
+    # Bind Controls
+    screen.onkey(snake.up, "Up") 
     screen.onkey(snake.down, "Down")
     screen.onkey(snake.left, "Left")
     screen.onkey(snake.right, "Right")
 
     game_is_on = True
     screen_boundary = 300 - 10
+    
     while game_is_on:
         screen.update()
         time.sleep(0.08)
@@ -61,7 +45,7 @@ def main():
         # Main game loop adjustments
         if snake_x_pos >= screen_boundary or snake_y_pos >= screen_boundary:
             game_is_on = False
-            clear_everything()
+            clear_everything(screen)
             game_over()
             screen.onkey(play_again, "y")
             screen.onkey(exit, 'n')
@@ -79,7 +63,7 @@ def main():
                 pass
             elif snake.head.distance(segment) < 10:
                 game_is_on = False
-                clear_everything()
+                clear_everything(screen)
                 game_over()
                 screen.onkey(play_again, "y")
                 screen.onkey(exit, 'n')
